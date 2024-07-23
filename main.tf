@@ -129,7 +129,7 @@ resource "oci_core_instance" "instance" {
   create_vnic_details {
     assign_public_ip = var.public_ip == "NONE" ? var.assign_public_ip : false
     display_name     = var.vnic_name == "" ? "" : var.instance_count != "1" ? "${var.vnic_name}_${count.index + 1}" : var.vnic_name
-    hostname_label   = var.hostname_label == "" ? "" : var.instance_count != "1" ? "${var.hostname_label}-${count.index + 1}" : var.hostname_label
+    hostname_label   = var.hostname_label == "" ? "" : var.instance_count != null ? "${var.hostname_label}-${count.index + 1}" : var.hostname_label
     private_ip = element(
       concat(var.private_ips, [""]),
       length(var.private_ips) == 0 ? 0 : count.index,
